@@ -1,0 +1,34 @@
+server {
+    listen [::]:80;
+    listen 80;
+
+    server_name "~^pvfclife(\d{0,1}\d{0,9})?\.click";
+
+    root /var/www/html;
+
+    location / {
+        proxy_pass http://pvfclife.click:3000/;
+    }
+}
+
+server {
+    listen [::]:80;
+    listen 80;
+
+    server_name api.pvfclife.click;
+
+    location / {
+        proxy_pass http://pvfclife.click:8080/;
+    }
+}
+
+server {
+    listen [::]:80;
+    listen 80;
+
+    server_name "~^admin\.pvfclife(\d{0,1}\d{0,9})?\.click";
+
+    location / {
+        proxy_pass http://pvfclife.click:3001/;
+    }
+}

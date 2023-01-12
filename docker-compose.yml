@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  client:
+    container_name: client
+    build: ./Client
+    restart: always
+    ports:
+      - 3000:80
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27018:27017
+    volumes:
+      - /root/pvfclife/database:/data/db
+
+  api:
+    container_name: api
+    build: ./Backend
+    restart: always
+    ports:
+      - 8080:8080
+
+  admin:
+    container_name: admin
+    build: ./AdminCMS
+    restart: always
+    ports:
+      - 3001:80
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./public:/var/www/html
+      - ./conf.d:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/nginx/ssl
+      - ./certbot/data:/var/www/certbot
+    ports:
+      - 80:80
+      - 443:443
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
+    # command: certonly --webroot --webroot-path=/var/www/certbot --email admin@pvfclife06.click --agree-tos --no-eff-email -d pvfclife06.click -d admin.pvfclife06.click -d api.pvfclife06.click -d pvfclife07.click -d admin.pvfclife07.click -d pvfclife08.click -d admin.pvfclife08.click -d pvfclife09.click -d admin.pvfclife09.click -d pvfclife10.click -d admin.pvfclife10.click
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/logs:/var/log/letsencrypt
+      - ./certbot/data:/var/www/certbot

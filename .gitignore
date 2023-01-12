@@ -1,0 +1,4 @@
+/certbot
+/conf.d/default.conf
+/database
+.DS_Store

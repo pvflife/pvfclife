@@ -1,0 +1,57 @@
+server {
+    listen [::]:80;
+    listen 80;
+
+    server_name _;
+
+    location ~ /.well-known/acme-challenge {
+        allow all; 
+        root /var/www/certbot;
+    }
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+
+    server_name "~^pvfclife(\d{0,1}\d{0,9})?\.click";
+
+    ssl_certificate /etc/nginx/ssl/live/mykey/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/mykey/privkey.pem;
+
+    root /var/www/html;
+
+    location / {
+        proxy_pass http://pvfclife.click:3000/;
+    }
+}
+
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+
+    server_name api.pvfclife.click;
+
+    ssl_certificate /etc/nginx/ssl/live/mykey/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/mykey/privkey.pem;
+
+    location / {
+        proxy_pass http://pvfclife.click:8080/;
+    }
+}
+
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+
+    server_name "~^admin\.pvfclife(\d{0,1}\d{0,9})?\.click";
+
+    ssl_certificate /etc/nginx/ssl/live/mykey/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/mykey/privkey.pem;
+
+    location / {
+        proxy_pass http://pvfclife.click:3001/;
+    }
+}
