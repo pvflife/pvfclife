@@ -77,9 +77,9 @@ export default function Request({ profile, data, dispatchReload }) {
                 data &&
                 data.map(item => {
                   return (
-                    <div>
+                    <div key={item._id}>
                       <span style={{marginRight: '20px', fontWeight: '500'}}>{moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}</span>
-                      <span style={{}}>{`Lệnh rút ${item.amount.toLocaleString()} vnđ`}</span>
+                      <span style={{}}>{`Lệnh rút ${item?.amount?.toLocaleString()} vnđ`}</span>
                     </div>
                   )
                 })

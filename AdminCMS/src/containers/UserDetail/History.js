@@ -54,7 +54,7 @@ export default function History({ data, balance, dispatchReload }) {
         Ví người dùng
       </Typography.Text>
       <hr />
-      <ItemText label="Số dư" value={`${balance.toLocaleString()} VND`} />
+      <ItemText label="Số dư" value={`${balance?.toLocaleString()} VND`} />
       {ROLE == 'ROOT' && (
         <div
           style={{
@@ -96,7 +96,7 @@ export default function History({ data, balance, dispatchReload }) {
             </Typography.Text>
             <Typography.Text>{`${
               item.status ? '+' : '-'
-            }${item.amount.toLocaleString()}`}</Typography.Text>
+            }${item?.amount?.toLocaleString()}`}</Typography.Text>
           </div>
         ))}
       </div>

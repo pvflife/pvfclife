@@ -11,6 +11,7 @@ export default function Contracts({ data, profile, dispatchReload }) {
   const [currentReason, setCurrentReason] = useState(data[0]?.response || {})
   const [canWithdraw, setCanWithdraw] = useState(String(data[0]?.response) === 'accepted')
   const [loading, setLoading] = useState(false)
+
   async function confirmContract() {
     setLoading(true)
     await api.put(`/contracts/${data[0]._id}/confirm`, {
@@ -19,8 +20,8 @@ export default function Contracts({ data, profile, dispatchReload }) {
     pushNotifications({
       to: profile._id,
       message: 'Hợp đồng vay đã được duyệt',
-      description: `Khoản vay ${data[0].amount.toLocaleString()} VND, ${
-        data[0].times
+      description: `Khoản vay ${data?.[0].amount?.toLocaleString()} VND, ${
+        data?.[0]?.times
       } tháng đã được thông qua. Hãy yêu cầu rút tiền.`,
     })
     message.success('Cập nhật thành công.')
@@ -69,7 +70,7 @@ export default function Contracts({ data, profile, dispatchReload }) {
         >
           <ItemText
             label="Số tiền "
-            value={data[0].amount.toLocaleString()}
+            value={data?.[0]?.amount?.toLocaleString()}
             editable
             changeFunc={e => updateItem('amount', parseInt(e.split(',').join('')))}
           />

@@ -19,7 +19,7 @@ export default function Notifications() {
   const content = (
     <div style={{ maxHeight: 600, overflowY: 'scroll', minWidth: '100%' }}>
       {notifications.map(item => (
-        <ItemNotification item={item} setNotifications={setNotifications} />
+        <ItemNotification key={item._id} item={item} setNotifications={setNotifications} />
       ))}
       {canNext && (
         <Typography.Link onClick={() => setPage(prev => prev + 1)}>Cũ hơn</Typography.Link>

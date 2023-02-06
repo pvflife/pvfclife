@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { notification } from 'antd'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import socketIOClient from 'socket.io-client'
 import { SOCKET_SERVER_URL } from '../utils/constant'
-
-// const SOCKET_SERVER_URL = SOCKET_SERVER_URL
 
 const PUSH_NOTIFICATION = 'push-notifications'
 const RECIEVE_NOTIFICATION = 'recieve-notification'
@@ -14,7 +9,6 @@ const JOIN_CHANNEL = 'join-channel'
 const useNotifications = () => {
   const [notifications, setNotifications] = useState([]) // Sent and received messages
   const socketRef = useRef()
-  const history = useHistory()
 
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
