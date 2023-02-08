@@ -23,6 +23,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+    volumes:
+      - ./Backend/uploads:/uploads
 
   admin:
     container_name: admin
